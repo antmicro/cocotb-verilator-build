@@ -1,0 +1,8 @@
+[submodule "cocotb"]
+	path = cocotb
+	url = https://github.com/antmicro/cocotb.git
+	branch = verilator-infrastructure
+[submodule "verilator"]
+	path = verilator
+	url = https://github.com/antmicro/verilator.git
+	branch = dev
