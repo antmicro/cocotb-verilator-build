@@ -27,8 +27,8 @@
 
 # Examples
 
-To run Cototb included examples simple run cocotb/name_of_the_example/run.
-To clean directory with examples execute cocotb/name_of_the_example/clean.
+To run Cototb included examples simply run `make cocotb/name_of_the_example/run`.
+To clean directory with examples execute `make cocotb/name_of_the_example/clean`.
 
 Running `adder` example:
 
@@ -41,3 +41,15 @@ Runing `D flip-flop` example:
 Running `axi_lite_slave`:
 
     make cocotb/axi_lite_slave/run
+
+To dump the vaweform from the simulation set the `VERILATOR_TRACE=1` env variable e.g:
+
+    VERILATOR_TRACE=1 make cocotb/dff/run
+
+The vaweform file is written in the example folder. `gtkwave` can for viewing it e.g:
+
+    gtkwave cocotb/examples/dff/tests/dump.vcd
+
+You should get a similar waveform:
+
+![alt text](https://github.com/antmicro/cocotb-verilator-build/raw/master/src/img/dff-vcd.png "DFF test waveform")
