@@ -52,4 +52,4 @@ The vaweform file is written in the example folder. `gtkwave` can for viewing it
 
 You should get a similar waveform:
 
-![alt text](https://github.com/antmicro/cocotb-verilator-build/raw/master/src/img/dff-vcd.png "DFF test waveform")
+![alt text](https://github.com/antmicro/cocotb-verilator-build/raw/master/img/dff-vcd.png "DFF test waveform")
