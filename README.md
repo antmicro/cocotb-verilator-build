@@ -38,7 +38,7 @@
 
 # Examples
 
-To run the examples included Cocotb examples, simply run `make cocotb/name_of_the_example/run`.
+To run the examples included in Cocotb, simply run `make cocotb/name_of_the_example/run`.
 To clean the directory with the examples execute `make cocotb/name_of_the_example/clean`.
 
 Running the `adder` example:
