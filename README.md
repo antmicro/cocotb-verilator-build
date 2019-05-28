@@ -64,3 +64,7 @@ The vaweform file is written in the example folder. `gtkwave` can be used for vi
 An example waveform you should get is shown below:
 
 ![DFF test waveform](img/dff-vcd.png)
+
+An example test output is shown in the picture bellow:
+
+![DFF test waveform](img/dff-test.png)
