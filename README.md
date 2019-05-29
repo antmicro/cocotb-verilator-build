@@ -5,6 +5,8 @@
    ```
    sudo apt-get install virtualenv build-essential
    sudo apt-get install python3-dev
+   sudo apt install gtkwave
+
    ```
  
 
