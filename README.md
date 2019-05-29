@@ -4,8 +4,9 @@
 
    ```
    sudo apt-get install virtualenv build-essential
-   ```
    sudo apt-get install python3-dev
+   ```
+ 
 
 2. Clone the repository:
 
