@@ -69,3 +69,59 @@ endef
 COCOTB_EXAMPLES = $(shell for p in cocotb/examples/* ; do [ -d $$p ] && echo $$p | cut -d\/ -f3 ; done)
 
 $(foreach t,$(COCOTB_EXAMPLES),$(eval $(call cocotb_target,$(t))))
+
+# ---------------------------------- TESTS ---------------------------------
+SYSTEMC_URL = https://www.accellera.org/images/downloads/standards/systemc/systemc-2.3.3.tar.gz
+VCDDIFF_URL = git@github.com:veripool/vcddiff.git
+
+tests/.dir:
+	mkdir `dirname $@` && touch $@
+
+
+tests/systemc.tar.gz: tests/.dir
+	wget -c $(SYSTEMC_URL) -O $@ && touch $@
+
+tests/systemc/.unpack: tests/systemc.tar.gz
+	mkdir tests/systemc && tar xf $< --strip-components=1 -C tests/systemc && touch $@
+
+tests/systemc/.conf: tests/systemc/.unpack
+	(cd tests/systemc && ./configure --prefix=$(PWD)/tests/systemc/image) && touch $@
+
+tests/systemc/.build: tests/systemc/.conf
+	(cd tests/systemc && make -j`nproc`) && touch $@
+
+tests/systemc/.install: tests/systemc/.build
+	(cd tests/systemc && make install) && touch $@
+
+
+tests/vcddiff/.clone: tests/.dir
+	git clone $(VCDDIFF_URL) tests/vcddiff && touch $@
+
+tests/vcddiff/vcddiff: tests/vcddiff/.clone
+	(cd tests/vcddiff && make -j`nproc`)
+
+
+tests/.verilator_clone: tests/.dir
+	git clone verilator tests/verilator && touch $@
+
+tests/verilator/configure: tests/.verilator_clone
+	(cd tests/verilator && autoconf)
+
+tests/.verilator_conf: tests/verilator/configure
+	(cd tests/verilator && ./configure --enable-longtests) && touch $@
+
+tests/.verilator_build: tests/.verilator_conf
+	(cd tests/verilator && make -j`nproc`) && touch $@
+
+
+tests/verilator: tests/.verilator_build tests/vcddiff/vcddiff tests/systemc/.install
+	(cd tests/verilator && \
+		PATH=/home/lukas/cocotb/vcddiff:$$PATH \
+		LD_LIBRARY_PATH=$(PWD)/tests/systemc/image/lib-linux64 \
+		SYSTEMC_INCLUDE=$(PWD)/tests/systemc/image/include \
+		SYSTEMC_LIBDIR=$(PWD)/tests/systemc/image/lib-linux64 \
+			make test 2>&1 | tee $(PWD)/tests/log-`git rev-parse --verify HEAD`.txt)
+
+
+tests/clean:
+	rm -rf tests
