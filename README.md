@@ -1,3 +1,11 @@
+***
+
+**IMPORTANT**
+
+**This repository has been archived and is no longer maintained since all changes required to support Verilator in cocotb have been upstreamed.**
+
+***
+
 # Verilator+cocotb integration quick start guide
 
 1. Install dependencies:
